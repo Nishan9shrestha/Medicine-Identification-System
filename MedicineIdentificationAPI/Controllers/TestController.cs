@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MedicineIdentificationAPI.Models; // Ensure this namespace matches where your DbContext is defined
 using System.Linq;
+using MedicineIdentificationAPI.Data;
 
 namespace MedicineIdentificationAPI.Controllers
 {

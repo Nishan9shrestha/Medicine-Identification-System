@@ -1,13 +1,23 @@
-﻿using MedicineIdentificationAPI.Models;
+﻿using MedicineIdentificationAPI.Data;
+using MedicineIdentificationAPI.Models;
 using MedicineIdentificationAPI.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MedicineIdentificationAPI.Repositories.Services
 {
     public class UserService : IUserRepository
     {
-        public Task AddUserAsync(User user)
+        private readonly MedicineDbContext _dbContext;
+
+        public UserService(MedicineDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        public async Task<ActionResult<User>> AddUserAsync(User user)
+        {
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
+            return await  _dbContext.Users.ToListAsync();
         }
 
         public Task DeleteUserAsync(Guid userId)

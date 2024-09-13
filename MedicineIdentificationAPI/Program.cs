@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MedicineIdentificationAPI.Models;
+using MedicineIdentificationAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
