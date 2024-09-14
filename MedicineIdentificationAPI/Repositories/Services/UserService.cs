@@ -1,7 +1,7 @@
 ﻿using MedicineIdentificationAPI.Data;
 using MedicineIdentificationAPI.Models;
 using MedicineIdentificationAPI.Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedicineIdentificationAPI.Repositories.Services
 {
@@ -13,36 +13,65 @@ namespace MedicineIdentificationAPI.Repositories.Services
         {
             _dbContext = dbContext;
         }
-        public async Task<ActionResult<User>> AddUserAsync(User user)
+
+        public async Task<User> AddUserAsync(User user)
         {
+            // Ensure the user does not have a set UserId
+            user.UserId = Guid.NewGuid(); // Assign a new unique ID
+
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
-            return await  _dbContext.Users.ToListAsync();
+            return user;
         }
 
-        public Task DeleteUserAsync(Guid userId)
+
+        public async Task<User> DeleteUserAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var user = await _dbContext.Users.FindAsync(userId);
+            if (user is null)
+                return null;
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
 
-        public Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.ToListAsync();
         }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public Task<User> GetUserByIdAsync(Guid userId)
+        public async Task<User> GetUserByIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.FindAsync(userId);
         }
 
-        public Task UpdateUserAsync(User user)
+        public async Task<User> UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            var existingUser = await _dbContext.Users.FindAsync(user.UserId);
+            if (existingUser is null)
+                return null;
+
+            existingUser.Username = user.Username;
+            existingUser.Email = user.Email;
+            existingUser.PasswordHash = user.PasswordHash;
+            existingUser.Role = user.Role;
+            existingUser.UpdatedAt = DateTime.UtcNow; // Update the UpdatedAt field
+
+            await _dbContext.SaveChangesAsync();
+            return existingUser;
+        }
+
+        // Example method to hash passwords - implement this according to your requirements
+        private string HashPassword(string password)
+        {
+            // Use a secure hashing algorithm, e.g., bcrypt
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }

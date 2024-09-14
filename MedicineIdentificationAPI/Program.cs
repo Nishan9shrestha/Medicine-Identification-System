@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using MedicineIdentificationAPI.Data;
+using MedicineIdentificationAPI.Repositories.Interfaces;
+using MedicineIdentificationAPI.Repositories.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<IUserRepository, UserService>();
 // Ensure this is not null
 builder.Services.AddDbContext<MedicineDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedicineDatabase")));
