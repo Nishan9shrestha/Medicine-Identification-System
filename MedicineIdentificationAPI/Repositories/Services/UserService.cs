@@ -19,11 +19,13 @@ namespace MedicineIdentificationAPI.Repositories.Services
             // Ensure the user does not have a set UserId
             user.UserId = Guid.NewGuid(); // Assign a new unique ID
 
+            // Hash the user's password before saving
+            user.PasswordHash = HashPassword(user.PasswordHash);
+
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
             return user;
         }
-
 
         public async Task<User> DeleteUserAsync(Guid userId)
         {
@@ -59,7 +61,13 @@ namespace MedicineIdentificationAPI.Repositories.Services
 
             existingUser.Username = user.Username;
             existingUser.Email = user.Email;
-            existingUser.PasswordHash = user.PasswordHash;
+
+            // If the password is being updated, hash it before saving
+            if (!string.IsNullOrEmpty(user.PasswordHash))
+            {
+                existingUser.PasswordHash = HashPassword(user.PasswordHash);
+            }
+
             existingUser.Role = user.Role;
             existingUser.UpdatedAt = DateTime.UtcNow; // Update the UpdatedAt field
 

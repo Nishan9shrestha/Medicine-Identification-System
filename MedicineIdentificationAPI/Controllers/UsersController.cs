@@ -80,7 +80,7 @@ namespace MedicineIdentificationAPI.Controllers
             if (user == null)
                 return NotFound("User does not exist.");
 
-            return NoContent(); // Use NoContent to indicate successful deletion
+            return Ok("Data has been Deleted From the Database"); // Use NoContent to indicate successful deletion
         }
     }
 }
