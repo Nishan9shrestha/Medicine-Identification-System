@@ -54,7 +54,7 @@ namespace MedicineIdentificationAPI.Controllers
                 return Conflict("Medicine already exists");
 
             var createdMedicine = await _medicineRepository.AddMedicineAsync(medicine);
-            return CreatedAtAction(nameof(GetMedicineByIdAsync), new { medicineId = createdMedicine.MedicineId }, createdMedicine);
+            return createdMedicine;
         }
 
         [HttpPut("{medicineId:guid}")]

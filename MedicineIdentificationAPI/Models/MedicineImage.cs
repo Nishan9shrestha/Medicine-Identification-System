@@ -5,7 +5,7 @@ namespace MedicineIdentificationAPI.Models;
 
 public partial class MedicineImage
 {
-    public Guid ImageId { get; set; }
+    public Guid ImageId { get; set; } = new Guid();
 
     public Guid? MedicineId { get; set; }
 
