@@ -5,7 +5,7 @@ namespace MedicineIdentificationAPI.Models;
 
 public partial class Log
 {
-    public Guid LogId { get; set; }
+    public Guid LogId { get; set; }=Guid.NewGuid();
 
     public Guid? UserId { get; set; }
 
