@@ -5,7 +5,7 @@ namespace MedicineIdentificationAPI.Models;
 
 public partial class Prediction
 {
-    public Guid PredictionId { get; set; }
+    public Guid PredictionId { get; set; } = Guid.NewGuid();
 
     public Guid? UserId { get; set; }
 

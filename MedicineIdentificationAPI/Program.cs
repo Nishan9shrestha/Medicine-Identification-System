@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserRepository, UserService>();
 builder.Services.AddScoped<IMedicineRepository, MedicineServices>();
 builder.Services.AddScoped<IMedicineImageRepository, MedicineImageService>();
+builder.Services.AddScoped<IPredictionRepository, PredictionService>();
 // Ensure this is not null
 builder.Services.AddDbContext<MedicineDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedicineDatabase")));

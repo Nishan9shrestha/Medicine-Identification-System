@@ -40,9 +40,9 @@ namespace MedicineIdentificationAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddImageAsync(MedicineImage image, IFormFile imageFile)
         {
-            await _medicineImageRepository.AddImageAsync(image,imageFile);
+            await _medicineImageRepository.AddImageAsync(image, imageFile);
 
-            return Ok(new {message = "New Image has been added Successfully"});
+            return Ok(new { message = "New Image has been added Successfully" });
         }
 
         [HttpDelete("{imageId:guid}")]
