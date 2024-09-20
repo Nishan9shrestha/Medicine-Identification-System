@@ -5,7 +5,7 @@ namespace MedicineIdentificationAPI.Models;
 
 public partial class DosageSchedule
 {
-    public Guid ScheduleId { get; set; }
+    public Guid ScheduleId { get; set; } = Guid.NewGuid();
 
     public Guid? MedicineId { get; set; }
 
