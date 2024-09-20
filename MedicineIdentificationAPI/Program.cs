@@ -14,6 +14,7 @@ builder.Services.AddScoped<IMedicineImageRepository, MedicineImageService>();
 builder.Services.AddScoped<IPredictionRepository, PredictionService>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackService>();
 builder.Services.AddScoped<IDosageScheduleRepository, DosageScheduleService>();
+builder.Services.AddScoped<ILogRepository, LogService>();
 // Ensure this is not null
 builder.Services.AddDbContext<MedicineDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedicineDatabase")));
